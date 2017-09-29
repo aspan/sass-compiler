@@ -26,14 +26,10 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.zip.GZIPOutputStream;
 
-import com.vaadin.sass.internal.ScssContext;
 import com.vaadin.sass.internal.ScssStylesheet;
-import com.vaadin.sass.internal.handler.SCSSDocumentHandlerImpl;
-import com.vaadin.sass.internal.handler.SCSSErrorHandler;
 
 public class SassCompiler {
 
-    private static final int ERROR_COMPILE_FAILED = 1;
     private static final int ERROR_FILE_NOT_FOUND = 2;
 
     public static void main(String[] args) throws Exception {
@@ -46,9 +42,6 @@ public class SassCompiler {
                 + "Output file is an optional argument, indicating the file\n"
                 + "in which to store the generated CSS. If it is not defined,\n"
                 + "the compiled CSS will be written to standard output.\n");
-
-        argp.defineOption("urlMode").values("mixed", "absolute", "relative")
-                .defaultValue("mixed").help("Set URL handling mode");
 
         argp.defineOption("minify").values("true", "false")
                 .defaultValue("false")
@@ -67,13 +60,9 @@ public class SassCompiler {
         String input = argp.getInputFile();
         String output = argp.getOutputFile();
 
-        ScssContext.UrlMode urlMode = getUrlMode(argp.getOptionValue("urlMode"));
-
         boolean minify = Boolean.parseBoolean(argp.getOptionValue("minify"));
         boolean compress = Boolean
                 .parseBoolean(argp.getOptionValue("compress"));
-        boolean ignoreWarnings = Boolean.parseBoolean(argp
-                .getOptionValue("ignore-warnings"));
 
         File in = new File(input);
         if (!in.canRead()) {
@@ -82,23 +71,16 @@ public class SassCompiler {
         }
         input = in.getCanonicalPath();
 
-        // You can set the resolver; if none is set, VaadinResolver will be used
-        // ScssStylesheet.setStylesheetResolvers(new VaadinResolver());
-
-        SCSSErrorHandler errorHandler = new SCSSErrorHandler();
-        errorHandler.setWarningsAreErrors(!ignoreWarnings);
         try {
             // Parse stylesheet
-            ScssStylesheet scss = ScssStylesheet.get(input, null,
-                    new SCSSDocumentHandlerImpl(), errorHandler);
+            ScssStylesheet scss = ScssStylesheet.get(input);
             if (scss == null) {
-                System.err.println("The scss file " + input
-                        + " could not be found.");
+                System.err.println("The scss file " + input + " could not be found.");
                 System.exit(ERROR_FILE_NOT_FOUND);
             }
 
             // Compile scss -> css
-            scss.compile(urlMode);
+            scss.compile();
 
             // Write result
             Writer writer = createOutputWriter(output);
@@ -111,12 +93,6 @@ public class SassCompiler {
             }
         } catch (Exception e) {
             throw e;
-        }
-
-        if (errorHandler.isErrorsDetected()) {
-            // Exit with error code so Maven and others can detect compilation
-            // was not successful
-            System.exit(ERROR_COMPILE_FAILED);
         }
     }
 
@@ -138,15 +114,6 @@ public class SassCompiler {
 
         gzos.finish();
         gzos.close();
-    }
-
-    private static ScssContext.UrlMode getUrlMode(String urlMode) {
-        if ("relative".equalsIgnoreCase(urlMode)) {
-            return ScssContext.UrlMode.RELATIVE;
-        } else if ("absolute".equalsIgnoreCase(urlMode)) {
-            return ScssContext.UrlMode.ABSOLUTE;
-        }
-        return ScssContext.UrlMode.MIXED;
     }
 
     private static Writer createOutputWriter(String filename)
