@@ -26,7 +26,7 @@ then include the built maven dependency
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-sass-compiler</artifactId>
-            <version>1.0.0.jsass.20170930.1</version>
+            <version>1.0.0.jsass.20180828</version>
         </dependency>
 ```
 
