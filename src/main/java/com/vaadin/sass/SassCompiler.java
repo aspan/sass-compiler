@@ -67,7 +67,7 @@ public class SassCompiler {
         File in = new File(input);
         if (!in.canRead()) {
             System.err.println(in.getCanonicalPath() + " could not be read!");
-            System.exit(ERROR_FILE_NOT_FOUND);
+            System.exit(0);
         }
         input = in.getCanonicalPath();
 
