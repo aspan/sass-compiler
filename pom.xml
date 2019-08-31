@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.vaadin</groupId>
-    <version>1.0.0.jsass.20180926</version>
+    <version>1.0.0.jsass.20190831</version>
     <artifactId>vaadin-sass-compiler</artifactId>
     <packaging>jar</packaging>
     <name>Vaadin Sass Compiler</name>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>io.bit3</groupId>
             <artifactId>jsass</artifactId>
-            <version>5.7.3</version>
+            <version>5.9.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
