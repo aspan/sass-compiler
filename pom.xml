@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.vaadin</groupId>
-    <version>1.0.0.jsass.20221101</version>
+    <version>1.0.0.jsass.20241104</version>
     <artifactId>vaadin-sass-compiler</artifactId>
     <packaging>jar</packaging>
     <name>Vaadin Sass Compiler</name>
@@ -52,7 +52,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.3.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
@@ -61,18 +61,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.13.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>17</release>
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <index>true</index>
@@ -87,7 +86,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -110,13 +109,13 @@
         <dependency>
             <groupId>io.bit3</groupId>
             <artifactId>jsass</artifactId>
-            <version>5.10.5</version>
+            <version>5.11.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.10</version>
+            <version>2.11.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
